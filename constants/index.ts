@@ -59,7 +59,16 @@ export const Socials = [
     name: "Instagram",
     src: "/instagram.svg",
   },
+  {
+    name: "LinkedIn",
+    src: "/Linkedin.svg",
+  },
+  {
+    name: "GitHub",
+    src: "/Github.svg",
+  },
 ];
+
 
 export const Frontend_skill = [
   {

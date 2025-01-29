@@ -13,7 +13,6 @@ import Image from "next/image";
 const HeroContent = () => {
   return (
     <motion.div
-    
       initial="hidden"
       animate="visible"
       className="flex flex-row items-center justify-center px-20 mt-40 w-full z-[20]"
@@ -24,9 +23,7 @@ const HeroContent = () => {
           className="Welcome-box py-[8px] px-[7px] border border-[#7042f88b] opacity-[0.9]"
         >
           <SparklesIcon className="text-[#b49bff] mr-[10px] h-5 w-5" />
-          <h1 className="Welcome-text text-[13px]">
-            Fullstack Developer 
-          </h1>
+          <h1 className="Welcome-text text-[13px]">Fullstack Developer</h1>
         </motion.div>
 
         <motion.div
@@ -34,12 +31,11 @@ const HeroContent = () => {
           className="flex flex-col gap-6 mt-6 text-6xl font-bold text-white max-w-[600px] w-auto h-auto"
         >
           <span>
-          Creative Developer 
+            Innovator in Code{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
               {" "}
-              | Full Stack Pro{" "}
+              Code Alchemist{" "}
             </span>
-            project exprience
           </span>
         </motion.div>
 
@@ -47,8 +43,10 @@ const HeroContent = () => {
           variants={slideInFromLeft(0.8)}
           className="text-lg text-gray-400 my-5 max-w-[600px]"
         >
-          I&apos;m a Full Stack Software Developer with experience in Website,
-          development. Check out my projects and skills.
+          Turning coffee into code and ideas into stunning digital realities.
+          From sleek websites to robust applications, I build it all—yes, even
+          the things you thought weren’t possible (you&apos;re welcome). Dive
+          into my projects and skills to see the magic unfold! 🚀
         </motion.p>
         <motion.a
           variants={slideInFromLeft(1)}

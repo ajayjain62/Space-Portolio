@@ -13,17 +13,18 @@ const Encryption = () => {
           variants={slideInFromTop}
           className="text-[40px] font-medium text-center text-gray-200"
         >
-          Performance
+          Let’s 
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
             {" "}
-            &{" "}
+            {" "}
           </span>
-          Security
+          Collaborate
         </motion.div>
       </div>
 
       <div className="flex flex-col items-center justify-center translate-y-[-50px] absolute z-[20] w-auto h-auto">
         <div className="flex flex-col items-center group cursor-pointer w-auto h-auto">
+          
           <Image
             src="/LockTop.png"
             alt="Lock top"
@@ -46,8 +47,7 @@ const Encryption = () => {
       </div>
       <div className="absolute z-[20] bottom-[10px] px-[5px]">
         <div className="cursive text-[20px] font-medium text-center text-gray-300">
-          Secure your data with end-to-end encryption
-        </div>
+        Ready to Chat? I’ll Bring the Ideas, You Bring the Questions.        </div>
       </div>
 
       <div className="w-full flex items-start justify-center absolute">
