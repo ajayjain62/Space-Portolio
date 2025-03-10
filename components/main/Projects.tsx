@@ -13,18 +13,18 @@ const Projects = () => {
       <div className="h-full w-full flex flex-col md:flex-row gap-10 px-10">
         <ProjectCard
           src="/NextWebsite.png"
-          title="Modern Next.js Portfolio"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          title="T3Stocks Project"
+          description="T3Stocks is a project focused on stock market analysis, providing real-time insights, portfolio tracking, and AI-driven predictions for informed trading decisions."
         />
         <ProjectCard
           src="/CardImage.png"
-          title="Interactive Website Cards"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          title="Gulabi Decor "
+          description="Gulabi Decor is a React-based project focused on elegant and vibrant home decor, featuring curated designs, sustainable materials, and seamless user experience."
         />
         <ProjectCard
           src="/SpaceWebsite.png"
-          title="Space Themed Website"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          title="Immune Science"
+          description="Podo Learn is a Learning Management System (LMS) designed to facilitate online education, offering courses, progress tracking, and interactive learning experiences. Let me know if you need any specific details or features for it!"
         />
       </div>
     </div>
