@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Sparkles, Clock, Mail, User, MessageSquare, Briefcase, Stars } from 'lucide-react';
@@ -81,7 +83,7 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#030014] text-white overflow-hidden">
+    <div id="contact" className="relative min-h-screen bg-[#030014] text-white overflow-hidden">
       <Particles
         id="tsparticles"
         init={particlesInit}

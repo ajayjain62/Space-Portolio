@@ -69,3 +69,8 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Hide default cursor when blob cursor is active */
+body {
+  cursor: none;
+}
