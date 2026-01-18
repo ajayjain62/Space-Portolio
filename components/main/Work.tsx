@@ -16,6 +16,14 @@ interface FormData {
   message: string;
 }
 
+interface FieldErrors {
+  name?: string;
+  email?: string;
+  projectType?: string;
+  budget?: string;
+  message?: string;
+}
+
 function App() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -29,6 +37,7 @@ function App() {
   const [submitted, setSubmitted] = useState(false);
   const [activeField, setActiveField] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
@@ -67,6 +76,7 @@ function App() {
           budget: '',
           message: '',
         });
+        setFieldErrors({});
       }, 3000);
     } catch (err) {
       setError('Failed to send message. Please try again.');
@@ -75,11 +85,83 @@ function App() {
     }
   };
 
+  // Validation rules using 'some' method pattern
+  const validateField = (name: string, value: string): string | undefined => {
+    switch (name) {
+      case 'name':
+        if (!value.trim()) return 'Name is required';
+        if (value.trim().length < 2) return 'Name must be at least 2 characters';
+        return undefined;
+      case 'email':
+        if (!value.trim()) return 'Email is required';
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) return 'Please enter a valid email address';
+        return undefined;
+      case 'projectType':
+        if (!value) return 'Please select a project type';
+        return undefined;
+      case 'budget':
+        if (!value) return 'Please select a budget range';
+        return undefined;
+      case 'message':
+        if (!value.trim()) return 'Message is required';
+        if (value.trim().length < 10) return 'Message must be at least 10 characters';
+        return undefined;
+      default:
+        return undefined;
+    }
+  };
+
+  // Validate all fields using 'some' method - stops at first error
+  const validateForm = (): boolean => {
+    const errors: FieldErrors = {};
+    
+    // Using 'some' method advantage: stops checking once it finds an invalid field
+    const hasErrors = Object.keys(formData).some((key) => {
+      const fieldName = key as keyof FormData;
+      const error = validateField(fieldName, formData[fieldName]);
+      if (error) {
+        errors[fieldName] = error;
+        return true; // Found an error, 'some' will return true
+      }
+      return false;
+    });
+
+    setFieldErrors(errors);
+    return !hasErrors; // Return true if no errors found
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [name]: value
     }));
+
+    // Clear error for this field when user starts typing
+    if (fieldErrors[name as keyof FieldErrors]) {
+      setFieldErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name as keyof FieldErrors];
+        return newErrors;
+      });
+    }
+
+    // Real-time validation (optional - can be removed if you want validation only on submit)
+    const error = validateField(name, value);
+    if (error) {
+      setFieldErrors(prev => ({ ...prev, [name]: error }));
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setActiveField(null);
+    const { name, value } = e.target;
+    const error = validateField(name, value);
+    if (error) {
+      setFieldErrors(prev => ({ ...prev, [name]: error }));
+    }
   };
 
   return (
@@ -152,7 +234,7 @@ function App() {
                 <span className="w-10 h-10 text-purple-500">
                   <Stars />
                 </span>
-                Let's Create Together
+                Let&apos;s Create Together
                 <span className="w-10 h-10 text-blue-400">
                   <Sparkles />
                 </span>
@@ -205,11 +287,13 @@ function App() {
                         value={formData[field as keyof FormData]}
                         onChange={handleChange}
                         onFocus={() => setActiveField(field)}
-                        onBlur={() => setActiveField(null)}
+                        onBlur={handleBlur}
                         placeholder={`Your ${field.charAt(0).toUpperCase() + field.slice(1)}`}
                         required
                         rows={4}
-                        className="bg-transparent w-full focus:outline-none resize-none"
+                        className={`bg-transparent w-full focus:outline-none resize-none ${
+                          fieldErrors[field as keyof FieldErrors] ? 'text-red-400' : ''
+                        }`}
                       />
                     ) : field === 'projectType' || field === 'budget' ? (
                       <select
@@ -217,9 +301,11 @@ function App() {
                         value={formData[field as keyof FormData]}
                         onChange={handleChange}
                         onFocus={() => setActiveField(field)}
-                        onBlur={() => setActiveField(null)}
+                        onBlur={handleBlur}
                         required
-                        className="bg-transparent w-full focus:outline-none"
+                        className={`bg-transparent w-full focus:outline-none ${
+                          fieldErrors[field as keyof FieldErrors] ? 'text-red-400' : ''
+                        }`}
                       >
                         <option value="" disabled>
                           {field === 'projectType' ? 'Select Project Type' : 'Select Budget Range'}
@@ -247,13 +333,25 @@ function App() {
                         value={formData[field as keyof FormData]}
                         onChange={handleChange}
                         onFocus={() => setActiveField(field)}
-                        onBlur={() => setActiveField(null)}
+                        onBlur={handleBlur}
                         placeholder={`Your ${field.charAt(0).toUpperCase() + field.slice(1)}`}
                         required
-                        className="bg-transparent w-full focus:outline-none"
+                        className={`bg-transparent w-full focus:outline-none ${
+                          fieldErrors[field as keyof FieldErrors] ? 'text-red-400' : ''
+                        }`}
                       />
                     )}
                   </motion.div>
+                  {/* Display field-specific error using 'some' method pattern */}
+                  {fieldErrors[field as keyof FieldErrors] && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red-400 text-sm mt-1 ml-1"
+                    >
+                      {fieldErrors[field as keyof FieldErrors]}
+                    </motion.p>
+                  )}
                 </motion.div>
               ))}
 

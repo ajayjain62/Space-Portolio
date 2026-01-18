@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
 
 interface MenuItem {
@@ -72,14 +71,14 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       x: position === 'right' ? '100%' : '-100%',
       transition: {
         duration: 0.5,
-        ease: [0.6, 0.01, -0.05, 0.95],
+        ease: [0.6, 0.01, 0, 0.95],
       },
     },
     open: {
       x: 0,
       transition: {
         duration: 0.5,
-        ease: [0.6, 0.01, -0.05, 0.95],
+        ease: [0.6, 0.01, 0, 0.95],
         staggerChildren: 0.1,
         delayChildren: 0.2,
       },
@@ -96,7 +95,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       opacity: 1,
       transition: {
         duration: 0.5,
-        ease: [0.6, 0.01, -0.05, 0.95],
+        ease: [0.6, 0.01, 0, 0.95],
       },
     },
   };
@@ -211,23 +210,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
               exit="closed"
             >
               <div className="flex flex-col h-full p-12">
-                {/* Logo */}
-                {logoUrl && (
-                  <motion.div
-                    className="mb-12"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                  >
-                    <Image
-                      src={logoUrl}
-                      alt="Logo"
-                      width={80}
-                      height={80}
-                      className="object-contain"
-                    />
-                  </motion.div>
-                )}
+               
 
                 {/* Menu Items */}
                 <nav className="flex-1 flex flex-col justify-center">
@@ -333,3 +316,4 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 };
 
 export default StaggeredMenu;
+
